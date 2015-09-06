@@ -14,7 +14,7 @@ cd "${WALLS_DIR}"
 
 # Get the links for the new 25 photos on r/wallpapers
 #
-curl "http://www.reddit.com/r/gmbwallpapers/new.json?t=week&limit=25" 2>/dev/null | tr \< \\n | grep -E 'http[s]?://i.imgur[^"]*\.[jpng]*"' >> links.txt
+curl "http://www.reddit.com/r/gmbwallpapers/new.json?t=week&limit=50" 2>/dev/null | tr \< \\n | grep -E 'http[s]?://i.imgur[^"]*\.[jpng]*"' >> links.txt
 
 # Loop through the links file to extract the actual links
 #
