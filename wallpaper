@@ -1,0 +1,44 @@
+#!/bin/bash
+# Create directory if its not already there
+#
+WALLS_DIR="$HOME/Pictures/todayswalls"
+mkdir -p "${WALLS_DIR}"
+
+# Clear the folder
+#
+rm "${WALLS_DIR}"/*
+
+# Move to directory to make things easier
+#
+cd "${WALLS_DIR}"
+
+# Get the links for the new 25 photos on r/wallpapers
+#
+curl "http://www.reddit.com/r/gmbwallpapers/new.json?t=week&limit=25" 2>/dev/null | tr \< \\n | grep -E 'http[s]?://i.imgur[^"]*\.[jpng]*"' >> links.txt
+
+# Loop through the links file to extract the actual links
+#
+for word in $(<links.txt); do 
+ echo "$word"  | sed -e 's!.*http\?://\([^"]*\.[jpng]*\).*!\1!g' | sort -u | grep i.imgur.com/ >> link.txt
+done
+
+# Loop through the list of extracted links and download the photos
+#
+for word in $(<link.txt); do
+ FILENAME=$(basename "$word")
+ wget "$word" -O "${FILENAME}"
+done
+
+# Move scripts over and create rolling wallpaper
+#
+cp ~/Downloads/createSlideshow.sh ~/Pictures/todayswalls/createSlideshow.sh
+~/Pictures/todayswalls/createSlideshow.sh 15
+
+# Clean up the folder
+#
+rm link*
+rm *.sh
+
+# NOTES:
+#curl "www.reddit.com/r/wallpapers/" 2>/dev/null | tr \< \\n | grep -E 'https?://[^"]*\.[jpng]*"' | sed -e 's!.*https\?://\([^"]*\.[jpng]*\).*!\1!g' | sort -u | while read line; do
+
