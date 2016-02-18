@@ -18,7 +18,7 @@ curl "http://www.reddit.com/r/wallpapers/hot.json?t=week&limit=50" 2>/dev/null |
 
 # Loop through the links file to extract the actual links
 #
-for word in $(<links.txt); do 
+for word in $(<links.txt); do
  echo "$word"  | sed -e 's!.*http\?://\([^"]*\.[jpng]*\).*!\1!g' | sort -u | grep i.imgur.com/ >> link.txt
 done
 
@@ -28,16 +28,6 @@ for word in $(<link.txt); do
  FILENAME=$(basename "$word")
  wget "$word" -O "${FILENAME}"
 done
-
-# Move scripts over and create rolling wallpaper
-#
-cp ~/Downloads/createSlideshow.sh ~/Pictures/todayswalls/createSlideshow.sh
-~/Pictures/todayswalls/createSlideshow.sh 15
-
-# Clean up the folder
-#
-rm link*
-rm *.sh
 
 # NOTES:
 #curl "www.reddit.com/r/wallpapers/" 2>/dev/null | tr \< \\n | grep -E 'https?://[^"]*\.[jpng]*"' | sed -e 's!.*https\?://\([^"]*\.[jpng]*\).*!\1!g' | sort -u | while read line; do
