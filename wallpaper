@@ -1,7 +1,7 @@
 #!/bin/bash
 # Create directory if its not already there
 #
-WALLS_DIR="$HOME/Pictures/todayswalls"
+WALLS_DIR="/home/jahall/ragebox/todayswalls"
 mkdir -p "${WALLS_DIR}"
 
 # Clear the folder
@@ -31,4 +31,3 @@ done
 
 # NOTES:
 #curl "www.reddit.com/r/wallpapers/" 2>/dev/null | tr \< \\n | grep -E 'https?://[^"]*\.[jpng]*"' | sed -e 's!.*https\?://\([^"]*\.[jpng]*\).*!\1!g' | sort -u | while read line; do
-
